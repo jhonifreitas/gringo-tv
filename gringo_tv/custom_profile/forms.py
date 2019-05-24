@@ -1,5 +1,4 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import AuthenticationForm
 
 from gringo_tv.core import utils
@@ -8,20 +7,20 @@ from gringo_tv.custom_profile import models
 
 class LoginForm(AuthenticationForm):
 
-    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': _('E-mail')}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': _('Password')}))
+    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Usuário'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
 
 class ProfileForm(forms.Form):
 
-    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Name')}), required=False)
-    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('last_name')}),
+    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Nome'}), required=False)
+    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
                                 required=False)
-    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': _('E-mail')}))
+    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Usuário'}))
     phone = forms.CharField(label='', max_length=15,
-                            widget=forms.TextInput(attrs={'placeholder': _('Phone'), 'type': 'tel'}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': _('Password')}))
-    password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': _('confirm_password')}))
+                            widget=forms.TextInput(attrs={'placeholder': 'Telefone', 'type': 'tel'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
+    password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha'}))
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
