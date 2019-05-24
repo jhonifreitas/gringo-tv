@@ -1,0 +1,25 @@
+# Application
+
+Django
+Pillow
+psycopg2
+psycopg2-binary
+static3
+gunicorn
+dj-database-url
+dj-static
+python-decouple
+django-widget-tweaks
+django-extensions
+django-storages
+boto3
+requests
+pytz
+
+# Auditlog
+git+https://github.com/cosmunsoftwares/django-auditlog.git
+
+# Django Tests
+
+django-test-without-migrations
+ipython
