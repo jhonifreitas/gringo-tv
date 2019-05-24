@@ -1,5 +1,5 @@
 """
-WSGI config for iptv project.
+WSGI config for Gringo TV project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 from dj_static import Cling
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'iptv.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gringo_tv.settings')
 
 application = Cling(get_wsgi_application())

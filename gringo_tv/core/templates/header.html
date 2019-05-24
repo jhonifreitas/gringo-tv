@@ -1,0 +1,39 @@
+<header class="main-header">
+  <a href="{% url 'core:home' %}" class="logo font-weight-bold">
+    <span class="logo-mini">GTV</span>
+    <span class="logo-lg">Gringo TV</span>
+  </a>
+  <nav class="navbar navbar-static-top p-0">
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="{%  url 'customer:logout' %}" class="py-3 px-4" title="Sair">
+            <i class="fas fa-power-off"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu" data-widget="tree">
+      <li class="header text-uppercase">Menu</li>
+      <li><a href="{% url 'core:home' %}"><i class="fas fa-home mr-2"></i><span>Início</span></a></li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fas fa-dollar-sign mr-2"></i><span>Financeiro</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left float-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+    </ul>
+  </section>
+</aside>

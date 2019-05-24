@@ -1,8 +1,3 @@
-# Como usar
-
-curl -L http://bit.ly/cosmun-softwares-django-boilerplate | bash -s <iptv>
-
-
 # <README.md>
 
 ## Como desenvolver?
@@ -17,7 +12,7 @@ curl -L http://bit.ly/cosmun-softwares-django-boilerplate | bash -s <iptv>
 
 ```console
 git <git url>
-cd iptv
+cd gringo_tv
 virtualenv env --python=python3 # python 3.6 ou mais atual
 source env/bin/activate
 pip install -r requirements_dev.txt

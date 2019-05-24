@@ -1,4 +1,4 @@
-"""iptv URL Configuration
+"""Gringo TV URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,16 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path
-from django.urls import include
+from django.urls import path, include
 from django.conf.urls.static import static
+
+# Admin customization.
+admin.site.site_header = 'Painel Gringo TV'
+admin.site.site_title = 'Painel Gringo TV'
+admin.site.index_title = 'Administração'
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Home
-    path('', include('iptv.core.urls', namespace='core')),
+    # CORE
+    path('', include('gringo_tv.core.urls', namespace='core')),
+
+    # PROFILE
+    path('perfil/', include('gringo_tv.custom_profile.urls', namespace='profile')),
 ]
 
 if settings.DEFAULT_FILE_STORAGE == 'django.core.files.storage.FileSystemStorage':

@@ -6,8 +6,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from iptv.core.manager import Manager
-from iptv.core.signals import post_soft_delete
+from gringo_tv.core.manager import Manager
+from gringo_tv.core.signals import post_soft_delete
 
 
 class AbstractBaseModel(models.Model):

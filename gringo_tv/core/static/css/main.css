@@ -1,0 +1,22 @@
+:root{
+
+}
+
+/* ========================================================= */
+/* ADMINLTE */
+/* ========================================================= */
+@media (min-width: 768px){
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
+    top: 48px;
+  }
+}
+.main-sidebar{
+  padding-top: 54px;
+}
+.main-header .logo{
+  height: 54px;
+}
+.main-header .sidebar-toggle{
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free";
+}

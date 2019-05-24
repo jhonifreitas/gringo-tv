@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from iptv.core.signals import post_soft_delete
+from gringo_tv.core.signals import post_soft_delete
 
 
 class QuerySet(models.query.QuerySet):
