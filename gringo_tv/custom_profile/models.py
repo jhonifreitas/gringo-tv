@@ -16,7 +16,32 @@ class Profile(AbstractBaseModel):
         verbose_name_plural = 'Perfils'
 
     user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='profile')
+    phone = models.CharField(verbose_name='Telefone', max_length=11)
+    points = models.IntegerField(verbose_name='Pontos', default=0)
+
+
+class Indication(AbstractBaseModel):
+
+    class Meta:
+        verbose_name = 'Indicação'
+        verbose_name_plural = 'Indicações'
+
+    PENDING = 'pending'
+    NOT_ACTIVE = 'not_active'
+    ACTIVE = 'active'
+
+    STATUS = [
+        (PENDING, 'Pendente'),
+        (NOT_ACTIVE, 'Não Ativo'),
+        (ACTIVE, 'Ativo')
+    ]
+
+    profile = models.ForeignKey(Profile, verbose_name='Perfil', on_delete=models.CASCADE, related_name='indications')
+    status = models.CharField(verbose_name='Status', max_length=255, choices=STATUS, default=PENDING)
+    name = models.CharField(verbose_name='Nome', max_length=255)
+    phone = models.CharField(verbose_name='Telefone', max_length=11)
 
 
 auditlog.register(User)
 auditlog.register(Profile)
+auditlog.register(Indication)

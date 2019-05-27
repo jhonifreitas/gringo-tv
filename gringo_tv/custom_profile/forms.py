@@ -7,7 +7,7 @@ from gringo_tv.custom_profile import models
 
 class LoginForm(AuthenticationForm):
 
-    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Usuário'}))
+    username = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Usuário'}))
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
 

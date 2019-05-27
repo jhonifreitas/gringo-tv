@@ -1,13 +1,13 @@
 from django.views import View
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
@@ -51,11 +51,11 @@ class BaseDetailView(BaseView, DetailView):
 
 class HomeView(BaseView):
 
-    template_name = 'core/pages/home.html'
+    template_name = 'core/home.html'
 
     def get_context_data(self):
         context = {}
         return context
 
     def get(self, request):
-        return render(request, self.template_name, get_context_data())
+        return render(request, self.template_name, self.get_context_data())
