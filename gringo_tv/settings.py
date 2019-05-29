@@ -39,6 +39,7 @@ SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
 
 INSTALLED_APPS = [
     'gringo_tv.core.apps.CoreConfig',
+    'gringo_tv.core.apps.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

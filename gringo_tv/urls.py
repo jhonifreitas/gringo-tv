@@ -31,7 +31,10 @@ urlpatterns = [
     path('', include('gringo_tv.core.urls', namespace='core')),
 
     # PROFILE
-    path('perfil/', include('gringo_tv.custom_profile.urls', namespace='profile')),
+    path('usuario/', include('gringo_tv.custom_profile.urls', namespace='profile')),
+
+    # INDICATION
+    path('indicacao/', include('gringo_tv.custom_profile.urls_indication', namespace='indication')),
 ]
 
 if settings.DEFAULT_FILE_STORAGE == 'django.core.files.storage.FileSystemStorage':

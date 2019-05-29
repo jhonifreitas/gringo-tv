@@ -11,16 +11,18 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
 
-    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Nome'}), required=False)
-    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
-                                required=False)
-    username = forms.EmailField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Usuário'}))
-    phone = forms.CharField(label='', max_length=15,
-                            widget=forms.TextInput(attrs={'placeholder': 'Telefone', 'type': 'tel'}))
-    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
-    password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Confirme sua senha'}))
+    class Meta:
+        model = models.Profile
+        exclude = ['user', 'points', 'deleted_at']
+
+    first_name = forms.CharField(label='Nome')
+    last_name = forms.CharField(label='Sobrenome')
+    username = forms.CharField(label="Usuário")
+    phone = forms.CharField(label="Telefone")
+    password = forms.CharField(label='Senha')
+    password1 = forms.CharField(label='Confirme sua senha')
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
@@ -37,13 +39,36 @@ class ProfileForm(forms.Form):
         return self.cleaned_data
 
     def save(self):
-        data = self.cleaned_data.copy()
-        data.pop('password1')
-        data_user = {
-            'first_name': data.pop('first_name'),
-            'last_name': data.pop('last_name'),
-            'username': data.pop('username'),
-            'password': data.pop('password'),
-        }
-        user = models.User.objects.create_user(**data_user)
-        return models.Profile.objects.create(user=user, **data)
+        profile = None
+        if not self.initial.get('id'):
+            data = self.cleaned_data.copy()
+            data.pop('password1')
+            data_user = {
+                'first_name': data.pop('first_name'),
+                'last_name': data.pop('last_name'),
+                'username': data.pop('username'),
+                'password': data.pop('password'),
+            }
+            user = models.User.objects.create_user(**data_user)
+            profile = models.Profile.objects.create(user=user, **data)
+        else:
+            profile = super().save()
+
+        if self.initial.get('id') and self.cleaned_data.get('password'):
+            self.instance.user.set_password(self.cleaned_data.get('password'))
+
+        return profile
+
+
+class IndicationForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Indication
+        exclude = ['profile', 'status', 'deleted_at']
+
+    phone = forms.CharField(label="Telefone")
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        phone = utils.Phone(phone).cleaning()
+        return phone

@@ -1,15 +1,47 @@
 {% extends "base.html" %}
+{% load template_tags %}
 
 {% block content %}
   <section class="content">
     <div class="box box-primary">
       <div class="box-header">
-        <i class="fas fa-gift mr-2"></i>
-        <h3 class="box-title">Usuários</h3>
+        <i class="fas fa-list mr-2"></i>
+        <h3 class="box-title">Indicações</h3>
       </div>
       <div class="box-body text-center">
-        <img src="https://picsum.photos/1000/500" class="img-fluid" alt="">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-left">Nome</th>
+              <th>Telefone</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for object in object_list %}
+              <tr>
+                <td class="text-left">{{ object.name }}</td>
+                <td>{{ object.phone|mask_phone }}</td>
+                <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
+                <td>
+                  <a href="{% url 'indication:update' object.pk %}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
+                  <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="text-center">Nenhum registro encontrado!</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
+  <a href="{% url 'indication:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+{% endblock %}
+{% block modal %}
+  {% for object in object_list %}
+    {% url 'indication:delete' object.pk as url_delete %}
+    {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
+  {% endfor %}
 {% endblock %}

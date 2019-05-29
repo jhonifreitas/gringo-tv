@@ -19,6 +19,9 @@ class Profile(AbstractBaseModel):
     phone = models.CharField(verbose_name='Telefone', max_length=11)
     points = models.IntegerField(verbose_name='Pontos', default=0)
 
+    def __str__(self):
+        return self.user.get_full_name()
+
 
 class Indication(AbstractBaseModel):
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load template_tags %}
 
 {% block content %}
   <section class="content">
@@ -9,14 +10,40 @@
       </div>
       <div class="box-body text-center">
         <table class="table">
-          <tbody>
+          <thead>
             <tr>
-
+              <th class="text-left">Nome</th>
+              <th>Usuário</th>
+              <th>Telefone</th>
+              <th>Pontos</th>
+              <th>Ações</th>
             </tr>
+          </thead>
+          <tbody>
+            {% for object in object_list %}
+              <tr>
+                <td class="text-left">{{ object.user.get_full_name|default:object.user.username }}</td>
+                <td>{{ object.user.username }}</td>
+                <td>{{ object.phone|mask_phone }}</td>
+                <td>{{ object.points }}</td>
+                <td>
+                  <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
+                  <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="text-center">Nenhum registro encontrado!</td></tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
   </section>
-  <a href="{% url 'customer:user-create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+  <a href="{% url 'profile:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+{% endblock %}
+{% block modal %}
+  {% for object in object_list %}
+    {% url 'profile:delete' object.pk as url_delete %}
+    {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
+  {% endfor %}
 {% endblock %}

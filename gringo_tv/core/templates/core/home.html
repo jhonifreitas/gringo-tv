@@ -6,7 +6,7 @@
       <div class="col-md">
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>0</h3>
+            <h3>{{ user.profile.points }}</h3>
             <p>Pontos</p>
           </div>
           <div class="icon">
@@ -18,7 +18,7 @@
       <div class="col-md">
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3>0</h3>
+            <h3>{{ user.profile.indications.count }}</h3>
             <p>Indicações</p>
           </div>
           <div class="icon">
@@ -30,11 +30,11 @@
       <div class="col-md">
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3>01/01/20</h3>
-            <p>Data da Premiação</p>
+            <h3>{{ pendings }}</h3>
+            <p>Pendentes</p>
           </div>
           <div class="icon">
-            <i class="fas fa-calendar"></i>
+            <i class="fas fa-user-clock"></i>
           </div>
           <a href="#" class="small-box-footer"></a>
         </div>
