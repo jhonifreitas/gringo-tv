@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from gringo_tv.core.manager import Manager
+from gringo_tv.storage import get_storage_path
 from gringo_tv.core.signals import post_soft_delete
 
 
@@ -30,3 +31,17 @@ class AbstractBaseModel(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+
+def get_config_path(instance, filename):
+    return get_storage_path(filename, 'config')
+
+
+class Config(AbstractBaseModel):
+
+    class Meta:
+        verbose_name = 'Configuração'
+        verbose_name_plural = 'Configuração'
+
+    image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path)
+    description = models.TextField(verbose_name='Descrição')

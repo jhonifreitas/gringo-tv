@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from gringo_tv.core import models, forms
 from gringo_tv.custom_profile.models import Indication
 
 
@@ -57,6 +58,22 @@ class HomeView(BaseView):
 
     def get_context_data(self):
         context = {'pendings': self.request.user.profile.indications.filter(status=Indication.PENDING).count()}
+        return context
+
+    def get(self, request):
+        return render(request, self.template_name, self.get_context_data())
+
+
+class ConfigView(View):
+
+    model = models.Config
+    form_class = forms.ConfigForm
+    template_name = 'core/config.html'
+    success_message = 'Configuração salva!'
+    success_url = reverse_lazy('core:config')
+
+    def get_context_data(self):
+        context = {'form': self.form_class()}
         return context
 
     def get(self, request):

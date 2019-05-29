@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="content">
+    <form class="position-relative" method="POST">
+      {% csrf_token %}
+      <div class="box box-primary">
+        <div class="box-header">
+          <i class="fas fa-cogs mr-2"></i>
+          <h3 class="box-title">Configuração</h3>
+        </div>
+        <div class="box-body">
+          <div id="dropzone-image" class="dropzone"></div>
+          {% include 'core/components/field.html' with field=form.description %}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
+    </form>
+  </section>
+{% endblock %}
+{% block modal %}
+  {% include 'core/components/form-error.html' with form=form %}
+{% endblock %}
+{% block css %}
+  <link href="{% static 'plugins/dropzone/css/dropzone.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+  <script src="{% static 'plugins/dropzone/js/dropzone.min.js' %}"></script>
+  <script type="text/javascript">
+    Dropzone.autoDiscover = false;
+    $(function(){
+      $('#dropzone-image').dropzone({
+        url: $('#dropzone-image').attr('data-url'),
+        maxFiles: 1,
+        uploadMultiple: false,
+        paramName: function(){return 'image'},
+        acceptedFiles: 'image/*',
+        dictDefaultMessage: 'msg',
+        dictMaxFilesExceeded: 'Você não pode carregar mais arquivos.',
+        init: function(){
+          dz = this;
+          files = $('#dropzone-image').attr('data-files')
+          if(files){
+            $.each(JSON.parse(files), function(i, val){
+              dz.options.addedfile.call(dz, val);
+              dz.options.thumbnail.call(dz, val, val.url);
+              dz.options.complete.call(dz, val);
+            });
+          }
+
+          dz.on('sending', function(file, xhr, formData){
+            formData.append('type', type);
+          });
+        }
+      });
+    })
+  </script>
+{% endblock %}
