@@ -18,7 +18,7 @@ class ProfileForm(forms.ModelForm):
         exclude = ['user', 'points', 'deleted_at']
 
     first_name = forms.CharField(label='Nome')
-    last_name = forms.CharField(label='Sobrenome')
+    last_name = forms.CharField(label='Sobrenome', required=False)
     username = forms.CharField(label="Usuário")
     phone = forms.CharField(label="Telefone")
     password = forms.CharField(label='Senha')

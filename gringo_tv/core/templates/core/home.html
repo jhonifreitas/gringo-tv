@@ -54,11 +54,41 @@
     </div>
     <div class="box box-primary">
       <div class="box-header">
+        <i class="fas fa-medal mr-2"></i>
+        <h3 class="box-title">Classificação</h3>
+      </div>
+      <div class="box-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Nome</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for object in ranking %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ object.first_name }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="2" class="text-center">Nenhum registro encontrado!</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="box box-info">
+      <div class="box-header">
         <i class="fas fa-gift mr-2"></i>
         <h3 class="box-title">Premiação</h3>
       </div>
       <div class="box-body text-center">
-        <img src="https://picsum.photos/1000/500" class="img-fluid" alt="">
+        <img src="{{ config.image.url }}" class="img-fluid" alt="">
+        <h5 class="mt-5">ATENÇÃO!</h5>
+        <p>{{ config.description }}</p>
       </div>
     </div>
   </section>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
   <section class="content">
@@ -10,7 +11,10 @@
           <h3 class="box-title">Configuração</h3>
         </div>
         <div class="box-body">
-          <div id="dropzone-image" class="dropzone"></div>
+          <div class="mb-4">
+            <div id="dropzone-image" class="dropzone"></div>
+            <p class="dz-required text-danger small" style="display: none;">Imagem é obrigatório.</p>
+          </div>
           {% include 'core/components/field.html' with field=form.description %}
         </div>
       </div>
@@ -30,12 +34,13 @@
     Dropzone.autoDiscover = false;
     $(function(){
       $('#dropzone-image').dropzone({
-        url: $('#dropzone-image').attr('data-url'),
+        url: './',
         maxFiles: 1,
         uploadMultiple: false,
+        autoProcessQueue: false,
         paramName: function(){return 'image'},
         acceptedFiles: 'image/*',
-        dictDefaultMessage: 'msg',
+        dictDefaultMessage: 'Arraste a sua imagem para cá<br>ou<br>clique para carregar a imagem!',
         dictMaxFilesExceeded: 'Você não pode carregar mais arquivos.',
         init: function(){
           dz = this;
@@ -48,8 +53,35 @@
             });
           }
 
-          dz.on('sending', function(file, xhr, formData){
-            formData.append('type', type);
+          dz.on('sending', function(file, xhr, formData) {
+            $.each($('form').serializeArray(), function(key, el) {
+              formData.append(el.name, el.value);
+            });
+          });
+          dz.on('success', function(file, data, err) {
+            location.reload(true);
+          });
+          dz.on('error', function(file, data, err) {
+            $('.form').html(data['html'])
+          });
+
+          $('form [type="submit"]').click(function(e) {
+            can_submit = true;
+            $('form [required]').each(function(index, value){
+              if(!$(value).val()){
+                can_submit = false;
+              }
+            })
+            if(dz.files.length && can_submit){
+              e.preventDefault();
+              dz.processQueue();
+            }else{
+              if(can_submit){
+                e.preventDefault();
+              } if(!dz.files.length){
+                $('form .dz-required').slideDown('slow');
+              }
+            }
           });
         }
       });
