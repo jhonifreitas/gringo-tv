@@ -51,7 +51,7 @@
     {% url 'profile:minus-points' object.pk as url_minus %}
 
     {% include 'core/components/modal_confirm.html' with uuid="plus-"|concat:object.uuid url=url_plus %}
-    {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_minus %}
+    {% include 'core/components/modal_confirm.html' with uuid="minus-"|concat:object.uuid url=url_minus %}
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}
 {% endblock %}
