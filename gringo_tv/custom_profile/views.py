@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
 
 from gringo_tv.core import views
 from gringo_tv.custom_profile import models, forms
@@ -43,6 +45,19 @@ class ProfileDeleteView(views.BaseDeleteView):
     template_name = 'profile/list.html'
     success_url = reverse_lazy('profile:list')
     success_message = 'Usuário deletado!'
+
+
+class ProfilePointsView(views.BaseView):
+
+    def post(self, request, pk):
+        profile = get_object_or_404(models.Profile.objects.all(), pk=pk)
+        if request.GET.get('plus'):
+            profile.points += 1
+        elif request.GET.get('minus'):
+            profile.points -= 1
+        profile.save()
+        messages.success(request, 'Pontos do usuário registrados com sucesso!')
+        return redirect(reverse_lazy('profile:list'))
 
 
 # #####################################################################################################################

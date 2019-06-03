@@ -47,11 +47,11 @@
 {% block modal %}
   {% for object in object_list %}
     {% url 'profile:delete' object.pk as url_delete %}
-    {% url 'profile:plus-points' object.pk as url_plus %}
-    {% url 'profile:minus-points' object.pk as url_minus %}
+    {% url 'profile:points' object.pk as url_plus %}
+    {% url 'profile:points' object.pk as url_minus %}
 
-    {% include 'core/components/modal_confirm.html' with uuid="plus-"|concat:object.uuid url=url_plus %}
-    {% include 'core/components/modal_confirm.html' with uuid="minus-"|concat:object.uuid url=url_minus %}
+    {% include 'core/components/modal_confirm.html' with uuid="plus-"|concat:object.uuid url=url_plus|add:'?plus=True' %}
+    {% include 'core/components/modal_confirm.html' with uuid="minus-"|concat:object.uuid url=url_minus|add:'?minus=True' %}
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}
 {% endblock %}

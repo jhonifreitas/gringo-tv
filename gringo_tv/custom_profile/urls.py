@@ -13,4 +13,6 @@ urlpatterns = [
     path('formulario/', views.ProfileCreateView.as_view(), name='create'),
     path('formulario/<int:pk>/', views.ProfileUpdateView.as_view(), name='update'),
     path('<int:pk>/', views.ProfileDeleteView.as_view(), name='delete'),
+
+    path('pontos/<int:pk>/', views.ProfilePointsView.as_view(), name='points'),
 ]
