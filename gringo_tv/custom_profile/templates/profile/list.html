@@ -16,7 +16,7 @@
               <th>Usuário</th>
               <th>Telefone</th>
               <th>Pontos</th>
-              <th>Ações</th>
+              <th width="300">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -27,11 +27,16 @@
                 <td>{{ object.phone|mask_phone }}</td>
                 <td>{{ object.points }}</td>
                 <td>
-                  <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info"><i class="fas fa-plus"></i></button>
-                  <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning"><i class="fas fa-minus"></i></button>
+                  <a href="{% url 'indication:list' %}?profile={{ object.uuid }}" class="btn btn-outline-primary" title="Indicações pendentes">
+                    <i class="fas fa-users"></i>
+                    <span class="badge d-block rounded-pill">{{ object.indications.pending }}</span>
+                  </a>
 
-                  <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
-                  <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                  <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info" title="Adicionar Ponto"><i class="fas fa-plus"></i></button>
+                  <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning" title="Diminuir Ponto"><i class="fas fa-minus"></i></button>
+
+                  <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
+                  <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                 </td>
               </tr>
             {% empty %}
@@ -47,11 +52,10 @@
 {% block modal %}
   {% for object in object_list %}
     {% url 'profile:delete' object.pk as url_delete %}
-    {% url 'profile:points' object.pk as url_plus %}
-    {% url 'profile:points' object.pk as url_minus %}
+    {% url 'profile:points' object.pk as url_points %}
 
-    {% include 'core/components/modal_confirm.html' with uuid="plus-"|concat:object.uuid url=url_plus|add:'?plus=True' %}
-    {% include 'core/components/modal_confirm.html' with uuid="minus-"|concat:object.uuid url=url_minus|add:'?minus=True' %}
+    {% include 'core/components/modal_confirm.html' with uuid="plus-"|concat:object.uuid url=url_points|add:'?plus=True' %}
+    {% include 'core/components/modal_confirm.html' with uuid="minus-"|concat:object.uuid url=url_points|add:'?minus=True' %}
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}
 {% endblock %}

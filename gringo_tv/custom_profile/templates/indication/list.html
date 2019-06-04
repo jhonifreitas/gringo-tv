@@ -25,6 +25,12 @@
                 <td>{{ object.phone|mask_phone }}</td>
                 <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
                 <td>
+                  {% if user.is_superuser %}
+                    {% if not object.is_active %}<button type="button" data-toggle="modal" data-target="#confirm-active-{{ object.uuid }}" class="btn btn-outline-info" title="Ativar"><i class="fas fa-check"></i></button>{% endif %}
+                    {% if not object.is_pending %}<button type="button" data-toggle="modal" data-target="#confirm-pending-{{ object.uuid }}" class="btn btn-outline-dark" title="Pendente"><i class="fas fa-clock"></i></button>{% endif %}
+                    {% if not object.is_not_active %}<button type="button" data-toggle="modal" data-target="#confirm-not-active-{{ object.uuid }}" class="btn btn-outline-warning" title="Desativar"><i class="fas fa-times"></i></button>{% endif %}
+                  {% endif %}
+
                   <a href="{% url 'indication:update' object.pk %}" class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
                   <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
                 </td>
@@ -42,6 +48,13 @@
 {% block modal %}
   {% for object in object_list %}
     {% url 'indication:delete' object.pk as url_delete %}
+    {% url 'indication:status' object.pk as url_status %}
+
+    {% if user.is_superuser %}
+      {% if not object.is_active %}{% include 'core/components/modal_confirm.html' with uuid="active-"|concat:object.uuid url=url_status|add:'?status=active' %}{% endif %}
+      {% if not object.is_pending %}{% include 'core/components/modal_confirm.html' with uuid="pending-"|concat:object.uuid url=url_status|add:'?status=pending' %}{% endif %}
+      {% if not object.is_not_active %}{% include 'core/components/modal_confirm.html' with uuid="not-active-"|concat:object.uuid url=url_status|add:'?status=not_active' %}{% endif %}
+    {% endif %}
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}
 {% endblock %}

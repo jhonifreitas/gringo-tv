@@ -68,6 +68,14 @@ class IndicationListView(views.BaseListView):
     model = models.Indication
     template_name = 'indication/list.html'
 
+    def get_queryset(self):
+        object_list = super().get_queryset()
+        if self.request.GET.get('profile'):
+            object_list = object_list.filter(profile__uuid=self.request.GET.get('profile'))
+        else:
+            object_list.filter(profile=self.request.user.profile)
+        return object_list
+
 
 class IndicationCreateView(views.BaseCreateView):
 
@@ -75,7 +83,7 @@ class IndicationCreateView(views.BaseCreateView):
     form_class = forms.IndicationForm
     template_name = 'indication/form.html'
     success_url = reverse_lazy('indication:list')
-    success_message = 'Usuário cadastrado!'
+    success_message = 'Indicação cadastrada!'
 
     def form_valid(self, form):
         form.instance.profile = self.request.user.profile
@@ -88,11 +96,25 @@ class IndicationUpdateView(views.BaseUpdateView):
     form_class = forms.IndicationForm
     template_name = 'indication/form.html'
     success_url = reverse_lazy('indication:list')
-    success_message = 'Usuário salvo!'
+    success_message = 'Indicação salva!'
+
+
+class IndicationStatusView(views.BaseView):
+
+    model = models.Indication
+    success_url = reverse_lazy('indication:list')
+    success_message = 'Status alterado!'
+
+    def post(self, request, pk):
+        obj = get_object_or_404(self.model.objects.all(), pk=pk)
+        obj.status = request.GET.get('status')
+        obj.save()
+        messages.success(request, self.success_message)
+        return redirect(self.success_url)
 
 
 class IndicationDeleteView(views.BaseDeleteView):
 
     model = models.Indication
     success_url = reverse_lazy('indication:list')
-    success_message = 'Usuário deletado!'
+    success_message = 'Indicação deletada!'

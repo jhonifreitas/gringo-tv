@@ -12,9 +12,10 @@
         </div>
         <div class="box-body">
           <div class="mb-4">
-            <div id="dropzone-image" class="dropzone"></div>
+            <div id="dropzone-image" class="dropzone" data-files="[{{ files }}]"></div>
             <p class="dz-required text-danger small" style="display: none;">Imagem é obrigatório.</p>
           </div>
+          {% include 'core/components/field.html' with field=form.datetime class='datetimepicker' %}
           {% include 'core/components/field.html' with field=form.description %}
         </div>
       </div>
@@ -27,12 +28,23 @@
 {% endblock %}
 {% block css %}
   <link href="{% static 'plugins/dropzone/css/dropzone.min.css' %}" rel="stylesheet">
+  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
 {% endblock %}
 {% block js %}
   <script src="{% static 'plugins/dropzone/js/dropzone.min.js' %}"></script>
+  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
+  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
   <script type="text/javascript">
     Dropzone.autoDiscover = false;
     $(function(){
+      // DATETIMEPICKER
+      $('.datetimepicker').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY HH:mm',
+        viewMode: 'months',
+      });
+
       $('#dropzone-image').dropzone({
         url: './',
         maxFiles: 1,

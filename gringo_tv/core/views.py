@@ -80,7 +80,7 @@ class ConfigView(View):
 
     def get_context_data(self):
         config = self.model.objects.first()
-        context = {'form': self.form_class(instance=config)}
+        context = {'form': self.form_class(instance=config), 'files': config.get_image()}
         return context
 
     def get(self, request):

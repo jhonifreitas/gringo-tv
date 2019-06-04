@@ -1,8 +1,10 @@
+import json
 from uuid import uuid4
 
 from auditlog.models import AuditlogHistoryField
 
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -44,4 +46,12 @@ class Config(AbstractBaseModel):
         verbose_name_plural = 'Configuração'
 
     image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path)
+    datetime = models.DateTimeField(verbose_name='Data/Hora')
     description = models.TextField(verbose_name='Descrição')
+
+    def get_image(self):
+        return json.dumps({
+            'name': self.image.name.split('/')[-1],
+            'size': self.image.size,
+            'url': settings.MEDIA_URL+self.image.name
+        })
