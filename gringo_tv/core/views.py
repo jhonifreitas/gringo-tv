@@ -80,7 +80,7 @@ class ConfigView(View):
 
     def get_context_data(self):
         config = self.model.objects.first()
-        context = {'form': self.form_class(instance=config), 'files': config.get_image()}
+        context = {'form': self.form_class(instance=config)}
         return context
 
     def get(self, request):
@@ -92,7 +92,25 @@ class ConfigView(View):
         if form.is_valid():
             form.save()
             messages.success(request, self.success_message)
-            return JsonResponse({'ok': True})
+            if request.is_ajax():
+                return JsonResponse({'ok': True})
+            return redirect(self.success_url)
         context['form'] = form
-        return JsonResponse({'html': render_to_string(self.template_name, context, request),
-                             'errors': form.errors}, status=400)
+        if request.is_ajax():
+            return JsonResponse({'html': render_to_string(self.template_name, context, request),
+                                 'errors': form.errors}, status=400)
+        return render(request, self.template_name, context=context)
+
+
+class ConfigImageDeleteView(View):
+
+    model = models.Config
+    success_message = 'Imagem removida!'
+    success_url = reverse_lazy('core:config')
+
+    def post(self, request):
+        config = self.model.objects.first()
+        config.image = None
+        config.save()
+        messages.success(request, self.success_message)
+        return redirect(self.success_url)

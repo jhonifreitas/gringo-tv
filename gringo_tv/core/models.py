@@ -45,13 +45,7 @@ class Config(AbstractBaseModel):
         verbose_name = 'Configuração'
         verbose_name_plural = 'Configuração'
 
-    image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path)
+    image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path, null=True, blank=True)
     datetime = models.DateTimeField(verbose_name='Data/Hora')
     description = models.TextField(verbose_name='Descrição')
 
-    def get_image(self):
-        return json.dumps({
-            'name': self.image.name.split('/')[-1],
-            'size': self.image.size,
-            'url': settings.MEDIA_URL+self.image.name
-        })

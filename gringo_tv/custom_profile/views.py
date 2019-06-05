@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 from gringo_tv.core import views
 from gringo_tv.custom_profile import models, forms
@@ -10,6 +12,7 @@ class ProfileListView(views.BaseListView):
 
     model = models.Profile
     template_name = 'profile/list.html'
+    permission_required = ['profile.list_profile']
 
 
 class ProfileCreateView(views.BaseCreateView):
@@ -19,6 +22,7 @@ class ProfileCreateView(views.BaseCreateView):
     template_name = 'profile/form.html'
     success_url = reverse_lazy('profile:list')
     success_message = 'Usuário cadastrado!'
+    permission_required = ['profile.create_profile']
 
 
 class ProfileUpdateView(views.BaseUpdateView):
@@ -28,6 +32,7 @@ class ProfileUpdateView(views.BaseUpdateView):
     template_name = 'profile/form.html'
     success_url = reverse_lazy('profile:list')
     success_message = 'Usuário salvo!'
+    permission_required = ['profile.update_profile']
 
     def get_form(self):
         form = super().get_form()
@@ -45,6 +50,7 @@ class ProfileDeleteView(views.BaseDeleteView):
     template_name = 'profile/list.html'
     success_url = reverse_lazy('profile:list')
     success_message = 'Usuário deletado!'
+    permission_required = ['profile.delete_profile']
 
 
 class ProfilePointsView(views.BaseView):
