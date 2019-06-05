@@ -78,9 +78,11 @@ class ConfigView(View):
     success_message = 'Configuração salva!'
     success_url = reverse_lazy('core:config')
 
+    def get_object(self):
+        return self.model.objects.first()
+
     def get_context_data(self):
-        config = self.model.objects.first()
-        context = {'form': self.form_class(instance=config)}
+        context = {'form': self.form_class(instance=self.get_object())}
         return context
 
     def get(self, request):
@@ -88,7 +90,7 @@ class ConfigView(View):
 
     def post(self, request):
         context = self.get_context_data()
-        form = self.form_class(request.POST, request.FILES)
+        form = self.form_class(instance=self.get_object(), data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, self.success_message)

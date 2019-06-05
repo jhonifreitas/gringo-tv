@@ -21,7 +21,6 @@
               </div>
             {% else %}
               <div id="dropzone-image" class="dropzone"></div>
-              <p class="dz-required text-danger small" style="display: none;">Imagem é obrigatório.</p>
             {% endif %}
           </div>
           {% include 'core/components/field.html' with field=form.datetime class='datetimepicker' %}
@@ -90,12 +89,6 @@
             if(dz.files.length && can_submit){
               e.preventDefault();
               dz.processQueue();
-            }else{
-              if(can_submit){
-                e.preventDefault();
-              } if(!dz.files.length){
-                $('form .dz-required').slideDown('slow');
-              }
             }
           });
         }

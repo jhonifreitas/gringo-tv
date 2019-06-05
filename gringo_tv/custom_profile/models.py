@@ -48,6 +48,12 @@ class Indication(AbstractBaseModel):
     name = models.CharField(verbose_name='Nome', max_length=255)
     phone = models.CharField(verbose_name='Telefone', max_length=11)
 
+    def save(self):
+        if self.status == self.ACTIVE:
+            self.profile.points += 1
+            self.profile.save()
+        return super().save()
+
     @property
     def is_active(self):
         return self.status == self.ACTIVE

@@ -53,6 +53,9 @@ class ProfileForm(forms.ModelForm):
             profile = models.Profile.objects.create(user=user, **data)
         else:
             profile = super().save()
+            profile.user.first_name = self.cleaned_data.get('first_name')
+            profile.user.last_name = self.cleaned_data.get('last_name')
+            profile.user.save()
 
         if self.initial.get('id') and self.cleaned_data.get('password'):
             self.instance.user.set_password(self.cleaned_data.get('password'))
