@@ -1,8 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 
 from gringo_tv.core import views
 from gringo_tv.custom_profile import models, forms

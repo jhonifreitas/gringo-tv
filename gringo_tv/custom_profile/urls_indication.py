@@ -1,7 +1,6 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
 
-from gringo_tv.custom_profile import views, forms
+from gringo_tv.custom_profile import views
 
 app_name = 'indication'
 

@@ -1,9 +1,7 @@
-import shutil
 from model_mommy import mommy
 
-from django.conf import settings
-from django.urls import reverse_lazy
 from django.test import TestCase
+from django.urls import reverse_lazy
 from django.contrib.auth.models import Permission
 
 

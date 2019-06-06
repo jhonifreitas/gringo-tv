@@ -42,7 +42,7 @@
       <div class="col-md">
         <div class="small-box bg-red">
           <div class="inner">
-            <h3 id="timer" data-target="{{ config.datetime|date:'Y-m-d H:i:s' }}">00:10:59</h3>
+            <h3 id="timer" data-target="{{ config.datetime|date:'Y-m-d H:i:s' }}">00:00:00</h3>
             <p>Tempo restante</p>
           </div>
           <div class="icon">
@@ -96,8 +96,37 @@
 {% block js %}
   <script>
     $(function(){
-      datetime = $('#timer').attr('data-target');
-      
+      $timer = $('#timer')
+      datetime = $timer.attr('data-target');
+      var countDownDate = new Date(datetime).getTime();
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+        
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if(hours.toString().length == 1){
+          hours = "0"+hours;
+        } if(minutes.toString().length < 2){
+          minutes = "0"+minutes;
+        } if(seconds.toString().length < 2){
+          seconds = "0"+seconds;
+        }
+        
+        if (distance < 0) {
+          clearInterval(x);
+        }else{
+          html = hours+':'+minutes+':'+seconds;
+          if(days){
+            html = days + ' dias';
+          }
+          $timer.html(html);
+        }
+      }, 1000);
     })
   </script>
 {% endblock %}
