@@ -30,7 +30,12 @@ class AbstractBaseModel(models.Model):
         post_soft_delete.send(sender=type(self), instance=self, using=self._state.db)
 
     def __str__(self):
-        return str(self.pk)
+        result = str(self.pk)
+        if hasattr(self, 'title'):
+            result = self.title
+        elif hasattr(self, 'name'):
+            result = self.name
+        return result
 
 
 def get_config_path(instance, filename):

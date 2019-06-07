@@ -24,10 +24,10 @@
               <tr>
                 <td class="text-left">{{ object.name }}</td>
                 <td>{{ object.phone|mask_phone }}</td>
-                <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
                 <td>{{ object.dealer.user }}</td>
+                <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
                 <td>
-                  {% if user.is_superuser %}
+                  {% if user.is_superuser or user.dealer %}
                     {% if not object.is_active %}<button type="button" data-toggle="modal" data-target="#confirm-active-{{ object.uuid }}" class="btn btn-outline-info" title="Ativar"><i class="fas fa-check"></i></button>{% endif %}
                     {% if not object.is_pending %}<button type="button" data-toggle="modal" data-target="#confirm-pending-{{ object.uuid }}" class="btn btn-outline-dark" title="Pendente"><i class="fas fa-clock"></i></button>{% endif %}
                     {% if not object.is_not_active %}<button type="button" data-toggle="modal" data-target="#confirm-not-active-{{ object.uuid }}" class="btn btn-outline-warning" title="Desativar"><i class="fas fa-times"></i></button>{% endif %}
@@ -45,7 +45,9 @@
       </div>
     </div>
   </section>
-  <a href="{% url 'indication:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+  {% if not user.dealer %}
+    <a href="{% url 'indication:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+  {% endif %}
 {% endblock %}
 {% block modal %}
   {% for object in object_list %}

@@ -21,12 +21,20 @@
 
 <aside class="main-sidebar">
   <section class="sidebar">
+    <div class="user-panel">
+      <div class="info">
+        <p>Bem-vindo</p>
+        <p>{{ user }}</p>
+      </div>
+    </div>
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header text-uppercase">Menu</li>
       <li><a href="{% url 'core:home' %}"><i class="fas fa-home mr-2"></i><span>Início</span></a></li>
       <li><a href="{% url 'indication:list' %}"><i class="fas fa-user-plus mr-2"></i><span>Indicações</span></a></li>
-      {% if user.is_superuser %}
+      {% if user.is_superuser or user.dealer %}
         <li><a href="{% url 'profile:list' %}"><i class="fas fa-users mr-2"></i><span>Usuários</span></a></li>
+      {% endif %}
+      {% if user.is_superuser %}
         <li><a href="{% url 'core:config' %}"><i class="fas fa-cog mr-2"></i><span>Configuração</span></a></li>
       {% endif %}
     </ul>

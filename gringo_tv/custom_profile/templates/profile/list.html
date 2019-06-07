@@ -22,19 +22,20 @@
           <tbody>
             {% for object in object_list %}
               <tr>
-                <td class="text-left">{{ object.user.get_full_name|default:object.user.username }}</td>
-                <td>{{ object.user.username }}</td>
-                <td>{{ object.phone|mask_phone }}</td>
-                <td>{{ object.points }}</td>
+                <td class="align-middle text-left">{{ object.user.get_full_name|default:object.user.username }}</td>
+                <td class="align-middle">{{ object.user.username }}</td>
+                <td class="align-middle">{{ object.phone|mask_phone }}</td>
+                <td class="align-middle">{{ object.points }}</td>
                 <td>
                   <a href="{% url 'indication:list' %}?profile={{ object.uuid }}" class="btn btn-outline-primary" title="Indicações pendentes">
                     <i class="fas fa-users"></i>
                     <span class="badge d-block rounded-pill">{{ object.indications.pending }}</span>
                   </a>
 
-                  <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info" title="Adicionar Ponto"><i class="fas fa-plus"></i></button>
-                  <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning" title="Diminuir Ponto"><i class="fas fa-minus"></i></button>
-
+                  {% if user.is_superuser %}
+                    <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info" title="Adicionar Ponto"><i class="fas fa-plus"></i></button>
+                    <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning" title="Diminuir Ponto"><i class="fas fa-minus"></i></button>
+                  {% endif %}
                   <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                   <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                 </td>

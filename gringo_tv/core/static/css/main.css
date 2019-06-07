@@ -16,7 +16,10 @@
   font-weight: 900;
   font-family: "Font Awesome 5 Free";
 }
-
+.main-sidebar .user-panel>.info{
+  position: relative;
+  left: 0;
+}
 
 .flat-right{
   position: absolute;

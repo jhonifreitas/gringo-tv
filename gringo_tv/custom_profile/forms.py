@@ -21,13 +21,20 @@ class ProfileForm(forms.ModelForm):
     last_name = forms.CharField(label='Sobrenome', required=False)
     username = forms.CharField(label="Usuário")
     phone = forms.CharField(label="Telefone")
-    password = forms.CharField(label='Senha')
-    password1 = forms.CharField(label='Confirme sua senha')
+    password = forms.CharField(label='Senha', widget=forms.PasswordInput())
+    password1 = forms.CharField(label='Confirme sua senha', widget=forms.PasswordInput())
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
         phone = utils.Phone(phone).cleaning()
         return phone
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if models.User.objects.filter(username=username).exists():
+            self.add_error('username', 'Usuário já existe!')
+            raise forms.ValidationError('Usuário já existe!')
+        return username
 
     def clean(self):
         password = self.cleaned_data.get('password')
@@ -35,7 +42,6 @@ class ProfileForm(forms.ModelForm):
         if (password and password1) and (password != password1):
             self.add_error('password1', 'Senhas não são iguais!')
             raise forms.ValidationError('Senhas não são iguais!')
-
         return self.cleaned_data
 
     def save(self):
@@ -67,8 +73,9 @@ class IndicationForm(forms.ModelForm):
 
     class Meta:
         model = models.Indication
-        exclude = ['profile', 'status', 'deleted_at']
+        exclude = ['status', 'deleted_at']
 
+    profile = forms.ModelChoiceField(label="Perfil", queryset=models.Profile.objects.all(), required=False)
     phone = forms.CharField(label="Telefone")
 
     def clean_phone(self):

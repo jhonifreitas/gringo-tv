@@ -16,13 +16,17 @@ class Profile(AbstractBaseModel):
     class Meta:
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfils'
+        permissions = [
+            ('list_profile', 'Pode Listar Perfils'),
+        ]
 
     user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='profile')
+    dealer = models.ForeignKey(Dealer, verbose_name='Revendedor', on_delete=models.CASCADE, related_name='profiles')
     phone = models.CharField(verbose_name='Telefone', max_length=11)
     points = models.IntegerField(verbose_name='Pontos', default=0)
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user.get_full_name() or self.user.username
 
 
 class Indication(AbstractBaseModel):
@@ -45,7 +49,6 @@ class Indication(AbstractBaseModel):
     objects = manager.IndicationManager()
 
     profile = models.ForeignKey(Profile, verbose_name='Perfil', on_delete=models.CASCADE, related_name='indications')
-    dealer = models.ForeignKey(Dealer, verbose_name='Revendedor', on_delete=models.CASCADE, related_name='profiles')
     status = models.CharField(verbose_name='Status', max_length=255, choices=STATUS, default=PENDING)
     name = models.CharField(verbose_name='Nome', max_length=255)
     phone = models.CharField(verbose_name='Telefone', max_length=11)

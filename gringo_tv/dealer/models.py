@@ -18,5 +18,8 @@ class Dealer(AbstractBaseModel):
     user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='dealer')
     phone = models.CharField(verbose_name='Telefone', max_length=11)
 
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+
 
 auditlog.register(Dealer)
