@@ -3,22 +3,24 @@
 {% block content %}
   <section class="content">
     <div class="row">
-      <div class="col-md">
-        <div class="small-box bg-green">
-          <div class="inner">
-            <h3>{{ user.profile.points }}</h3>
-            <p>Pontos</p>
+      {% if not user.is_superuser and user.profile %}
+        <div class="col-md">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{ user.profile.points }}</h3>
+              <p>Pontos</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-plus"></i>
+            </div>
+            <a href="#" class="small-box-footer"></a>
           </div>
-          <div class="icon">
-            <i class="fas fa-plus"></i>
-          </div>
-          <a href="#" class="small-box-footer"></a>
         </div>
-      </div>
+      {% endif %}
       <div class="col-md">
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3>{{ user.profile.indications.count }}</h3>
+            <h3>{{ indications }}</h3>
             <p>Indicações</p>
           </div>
           <div class="icon">

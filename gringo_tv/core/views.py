@@ -59,9 +59,20 @@ class HomeView(BaseView):
     template_name = 'core/home.html'
 
     def get_context_data(self):
+        indications = Indication.objects.all()
+        pendings = indications.filter(status=Indication.PENDING)
+        ranking = Profile.objects.filter(points__gte=2)
+        if hasattr(self.request.user, 'profile'):
+            indications = indications.filter(profile=self.request.user.profile)
+            pendings = pendings.filter(profile=self.request.user.profile)
+        elif hasattr(self.request.user, 'dealer'):
+            indications = indications.filter(profile__dealer=self.request.user.dealer)
+            pendings = pendings.filter(profile__dealer=self.request.user.dealer)
+
         context = {
-            'pendings': self.request.user.profile.indications.filter(status=Indication.PENDING).count(),
-            'ranking': Profile.objects.filter(points__gte=2).order_by('points'),
+            'indications': indications.count(),
+            'pendings': pendings.count(),
+            'ranking': ranking.order_by('points'),
             'config': models.Config.objects.first()
         }
         return context

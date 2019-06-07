@@ -3,8 +3,9 @@ from auditlog.registry import auditlog
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from gringo_tv.core.models import AbstractBaseModel
+from gringo_tv.dealer.models import Dealer
 from gringo_tv.custom_profile import manager
+from gringo_tv.core.models import AbstractBaseModel
 
 
 User = get_user_model()
@@ -44,6 +45,7 @@ class Indication(AbstractBaseModel):
     objects = manager.IndicationManager()
 
     profile = models.ForeignKey(Profile, verbose_name='Perfil', on_delete=models.CASCADE, related_name='indications')
+    dealer = models.ForeignKey(Dealer, verbose_name='Revendedor', on_delete=models.CASCADE, related_name='profiles')
     status = models.CharField(verbose_name='Status', max_length=255, choices=STATUS, default=PENDING)
     name = models.CharField(verbose_name='Nome', max_length=255)
     phone = models.CharField(verbose_name='Telefone', max_length=11)

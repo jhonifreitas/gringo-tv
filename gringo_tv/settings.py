@@ -57,7 +57,8 @@ EXTRA_APPS = [
 ]
 
 PROJECT_APPS = [
-    'gringo_tv.custom_profile.apps.CustomProfileConfig'
+    'gringo_tv.custom_profile.apps.CustomProfileConfig',
+    'gringo_tv.dealer.apps.DealerConfig',
 ]
 
 INSTALLED_APPS += EXTRA_APPS
