@@ -5,73 +5,73 @@
     <div class="row">
       {% if not user.is_superuser and user.profile %}
         <div class="col-md">
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{ user.profile.points }}</h3>
-              <p>Pontos</p>
+          <div class="small-box bg-white shadow-1">
+            <div class="inner px-3 py-3">
+              <h3 class="text-dark">{{ user.profile.points }}</h3>
+              <p class="text-dark">Pontos</p>
             </div>
-            <div class="icon">
-              <i class="fas fa-plus"></i>
+            <div class="icon pr-2">
+              <i class="fas fa-plus text-green"></i>
             </div>
-            <a href="#" class="small-box-footer"></a>
+            <a href="#" class="small-box-footer bg-green"></a>
           </div>
         </div>
       {% endif %}
       <div class="col-md">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-            <h3>{{ indications }}</h3>
-            <p>Indicações</p>
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 class="text-dark">{{ indications }}</h3>
+            <p class="text-dark">Indicações</p>
           </div>
-          <div class="icon">
-            <i class="fas fa-users"></i>
+          <div class="icon pr-2">
+            <i class="fas fa-users text-aqua"></i>
           </div>
-          <a href="#" class="small-box-footer"></a>
+          <a href="#" class="small-box-footer bg-aqua"></a>
         </div>
       </div>
       <div class="col-md">
-        <div class="small-box bg-yellow">
-          <div class="inner">
-            <h3>{{ pendings }}</h3>
-            <p>Pendentes</p>
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 class="text-dark">{{ pendings }}</h3>
+            <p class="text-dark">Pendentes</p>
           </div>
-          <div class="icon">
-            <i class="fas fa-user-clock"></i>
+          <div class="icon pr-2">
+            <i class="fas fa-user-clock text-yellow"></i>
           </div>
-          <a href="#" class="small-box-footer"></a>
+          <a href="#" class="small-box-footer bg-yellow"></a>
         </div>
       </div>
       <div class="col-md">
-        <div class="small-box bg-red">
-          <div class="inner">
-            <h3 id="timer" data-target="{{ config.datetime|date:'Y-m-d H:i:s' }}">00:00:00</h3>
-            <p>Tempo restante</p>
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 id="timer" class="text-dark" data-target="{{ config.datetime|date:'Y-m-d H:i:s' }}">00:00:00</h3>
+            <p class="text-dark">Tempo restante</p>
           </div>
-          <div class="icon">
-            <i class="fas fa-clock"></i>
+          <div class="icon pr-2">
+            <i class="fas fa-clock text-red"></i>
           </div>
-          <a href="#" class="small-box-footer"></a>
+          <a href="#" class="small-box-footer bg-red"></a>
         </div>
       </div>
     </div>
-    <div class="box box-primary">
+    <div class="box box-primary border-0 rounded-0 shadow-1">
       <div class="box-header">
         <i class="fas fa-medal mr-2"></i>
         <h3 class="box-title">Classificação</h3>
       </div>
-      <div class="box-body">
-        <table class="table">
+      <div class="box-body px-0">
+        <table class="table table-striped">
           <thead>
             <tr>
-              <th>Posição</th>
-              <th>Nome</th>
+              <th class="border-0 text-center" width="100">Posição</th>
+              <th class="border-0">Nome</th>
             </tr>
           </thead>
           <tbody>
             {% for object in ranking %}
               <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ object.user.get_full_name }}</td>
+                <td class="text-center">{{ forloop.counter }}º</td>
+                <td>{{ object.user.get_full_name|default:object.user.username }}</td>
               </tr>
             {% empty %}
               <tr>
@@ -82,7 +82,7 @@
         </table>
       </div>
     </div>
-    <div class="box box-info">
+    <div class="box box-info border-0 rounded-0 shadow-1">
       <div class="box-header">
         <i class="fas fa-gift mr-2"></i>
         <h3 class="box-title">Premiação</h3>

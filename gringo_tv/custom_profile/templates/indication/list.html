@@ -3,28 +3,26 @@
 
 {% block content %}
   <section class="content">
-    <div class="box box-primary">
+    <div class="box box-primary border-0 rounded-0 shadow-1">
       <div class="box-header">
         <i class="fas fa-list mr-2"></i>
         <h3 class="box-title">Indicações</h3>
       </div>
-      <div class="box-body text-center">
-        <table class="table">
+      <div class="box-body text-center px-0">
+        <table class="table table-striped">
           <thead>
             <tr>
-              <th class="text-left">Nome</th>
-              <th>Telefone</th>
-              <th>Revendedor</th>
-              <th>Status</th>
-              <th>Ações</th>
+              <th class="border-0 text-left pl-4">Nome</th>
+              <th class="border-0">Telefone</th>
+              <th class="border-0">Status</th>
+              <th class="border-0">Ações</th>
             </tr>
           </thead>
           <tbody>
             {% for object in object_list %}
               <tr>
-                <td class="text-left">{{ object.name }}</td>
+                <td class="text-left pl-4">{{ object.name }}</td>
                 <td>{{ object.phone|mask_phone }}</td>
-                <td>{{ object.dealer.user }}</td>
                 <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
                 <td>
                   {% if user.is_superuser or user.dealer %}

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
 from gringo_tv.core import utils
+from gringo_tv.dealer.models import Dealer
 from gringo_tv.custom_profile import models
 
 
@@ -17,6 +18,7 @@ class ProfileForm(forms.ModelForm):
         model = models.Profile
         exclude = ['user', 'points', 'deleted_at']
 
+    dealer = forms.ModelChoiceField(label="Revendedor", queryset=Dealer.objects.all(), required=False)
     first_name = forms.CharField(label='Nome')
     last_name = forms.CharField(label='Sobrenome', required=False)
     username = forms.CharField(label="Usuário")
@@ -28,12 +30,11 @@ class ProfileForm(forms.ModelForm):
         phone = self.cleaned_data['phone']
         phone = utils.Phone(phone).cleaning()
         return phone
-    
+
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if models.User.objects.filter(username=username).exists():
             self.add_error('username', 'Usuário já existe!')
-            raise forms.ValidationError('Usuário já existe!')
         return username
 
     def clean(self):
@@ -41,13 +42,13 @@ class ProfileForm(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         if (password and password1) and (password != password1):
             self.add_error('password1', 'Senhas não são iguais!')
-            raise forms.ValidationError('Senhas não são iguais!')
         return self.cleaned_data
 
     def save(self):
         profile = None
         if not self.initial.get('id'):
             data = self.cleaned_data.copy()
+            data['dealer'] = self.instance.dealer
             data.pop('password1')
             data_user = {
                 'first_name': data.pop('first_name'),

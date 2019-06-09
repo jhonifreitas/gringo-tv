@@ -22,12 +22,6 @@ class ProfileCreateView(views.BaseCreateView):
     success_message = 'Usuário cadastrado!'
     permission_required = ['custom_profile.add_profile']
 
-    def get_form(self):
-        form = super().get_form()
-        print(form)
-        # from IPython import embed; embed()
-        return form
-
     def form_valid(self, form):
         if hasattr(self.request.user, 'dealer'):
             form.instance.dealer = self.request.user.dealer

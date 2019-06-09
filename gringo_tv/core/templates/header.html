@@ -1,10 +1,10 @@
 <header class="main-header">
-  <a href="{% url 'core:home' %}" class="logo font-weight-bold">
+  <a href="{% url 'core:home' %}" class="logo font-weight-bold border-0 text-white">
     <span class="logo-mini">GTV</span>
     <span class="logo-lg">Gringo TV</span>
   </a>
-  <nav class="navbar navbar-static-top p-0">
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+  <nav class="navbar navbar-static-top pl-2">
+    <a href="#" class="sidebar-toggle border-0 px-4" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
     <div class="navbar-custom-menu">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header text-uppercase">Menu</li>
+      <li class="header text-uppercase text-white">Menu</li>
       <li><a href="{% url 'core:home' %}"><i class="fas fa-home mr-2"></i><span>Início</span></a></li>
       <li><a href="{% url 'indication:list' %}"><i class="fas fa-user-plus mr-2"></i><span>Indicações</span></a></li>
       {% if user.is_superuser or user.dealer %}
