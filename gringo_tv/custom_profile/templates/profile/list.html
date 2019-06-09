@@ -9,42 +9,44 @@
         <h3 class="box-title">Usuários</h3>
       </div>
       <div class="box-body text-center px-0">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th class="border-0 text-left pl-4">Nome</th>
-              <th class="border-0">Usuário</th>
-              <th class="border-0">Telefone</th>
-              <th class="border-0">Pontos</th>
-              <th class="border-0" width="300">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for object in object_list %}
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td class="align-middle text-left pl-4">{{ object.user.get_full_name|default:object.user.username }}</td>
-                <td class="align-middle">{{ object.user.username }}</td>
-                <td class="align-middle">{{ object.phone|mask_phone }}</td>
-                <td class="align-middle">{{ object.points }}</td>
-                <td>
-                  <a href="{% url 'indication:list' %}?profile={{ object.uuid }}" class="btn btn-outline-primary px-3" title="Indicações pendentes">
-                    <i class="fas fa-users"></i>
-                    <span class="badge d-block rounded-pill">{{ object.indications.pending }}</span>
-                  </a>
-
-                  {% if user.is_superuser %}
-                    <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info" title="Adicionar Ponto"><i class="fas fa-plus"></i></button>
-                    <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning" title="Diminuir Ponto"><i class="fas fa-minus"></i></button>
-                  {% endif %}
-                  <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
-                  <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
-                </td>
+                <th class="border-0 text-left pl-4">Nome</th>
+                <th class="border-0">Usuário</th>
+                <th class="border-0">Telefone</th>
+                <th class="border-0">Pontos</th>
+                <th class="border-0" width="300">Ações</th>
               </tr>
-            {% empty %}
-              <tr><td colspan="5" class="text-center">Nenhum registro encontrado!</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for object in object_list %}
+                <tr>
+                  <td class="align-middle text-left pl-4">{{ object.user.get_full_name|default:object.user.username }}</td>
+                  <td class="align-middle">{{ object.user.username }}</td>
+                  <td class="align-middle">{{ object.phone|mask_phone }}</td>
+                  <td class="align-middle">{{ object.points }}</td>
+                  <td>
+                    <a href="{% url 'indication:list' %}?profile={{ object.uuid }}" class="btn btn-outline-primary px-3" title="Indicações pendentes">
+                      <i class="fas fa-users"></i>
+                      <span class="badge d-block rounded-pill">{{ object.indications.pending }}</span>
+                    </a>
+  
+                    {% if user.is_superuser %}
+                      <button type="button" data-toggle="modal" data-target="#confirm-plus-{{ object.uuid }}" class="btn btn-outline-info" title="Adicionar Ponto"><i class="fas fa-plus"></i></button>
+                      <button type="button" data-toggle="modal" data-target="#confirm-minus-{{ object.uuid }}" class="btn btn-outline-warning" title="Diminuir Ponto"><i class="fas fa-minus"></i></button>
+                    {% endif %}
+                    <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
+                    <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="5" class="text-center">Nenhum registro encontrado!</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>

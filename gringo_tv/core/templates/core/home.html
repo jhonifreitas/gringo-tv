@@ -4,7 +4,7 @@
   <section class="content">
     <div class="row">
       {% if not user.is_superuser and user.profile %}
-        <div class="col-md">
+        <div class="col">
           <div class="small-box bg-white shadow-1">
             <div class="inner px-3 py-3">
               <h3 class="text-dark">{{ user.profile.points }}</h3>
@@ -17,7 +17,7 @@
           </div>
         </div>
       {% endif %}
-      <div class="col-md">
+      <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
             <h3 class="text-dark">{{ indications }}</h3>
@@ -29,7 +29,7 @@
           <a href="#" class="small-box-footer bg-aqua"></a>
         </div>
       </div>
-      <div class="col-md">
+      <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
             <h3 class="text-dark">{{ pendings }}</h3>
@@ -41,7 +41,7 @@
           <a href="#" class="small-box-footer bg-yellow"></a>
         </div>
       </div>
-      <div class="col-md">
+      <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
             <h3 id="timer" class="text-dark" data-target="{{ config.datetime|date:'Y-m-d H:i:s' }}">00:00:00</h3>
@@ -60,26 +60,28 @@
         <h3 class="box-title">Classificação</h3>
       </div>
       <div class="box-body px-0">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th class="border-0 text-center" width="100">Posição</th>
-              <th class="border-0">Nome</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for object in ranking %}
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td class="text-center">{{ forloop.counter }}º</td>
-                <td>{{ object.user.get_full_name|default:object.user.username }}</td>
+                <th class="border-0 text-center" width="100">Posição</th>
+                <th class="border-0">Nome</th>
               </tr>
-            {% empty %}
-              <tr>
-                <td colspan="2" class="text-center">Nenhum registro encontrado!</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for object in ranking %}
+                <tr>
+                  <td class="text-center">{{ forloop.counter }}º</td>
+                  <td>{{ object.user.get_full_name|default:object.user.username }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="2" class="text-center">Nenhum registro encontrado!</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="box box-info border-0 rounded-0 shadow-1">

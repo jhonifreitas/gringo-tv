@@ -32,10 +32,12 @@
       <div class="card rounded-0 border-0">
         <div class="row mx-0">
           <div class="col-md-6 theme-bg d-flex justify-content-center align-items-center">
-            <img src="{% static 'img/lock.png' %}" alt="" class="img-fluid">
+            <div class="py-5">
+              <img src="{% static 'img/lock.png' %}" alt="" class="img-fluid">
+            </div>
           </div>
           <div class="col-md-6">
-            <div class="card-body">
+            <div class="card-body py-5">
               <div class="text-center">
                 <h2 class="mb-2">Gringo TV</h2>
                 <h4 class="mb-4">Login</h4>
@@ -46,7 +48,7 @@
                 {% include 'core/components/field.html' with field=form.password %}
                 <div class="mt-4 text-center">
                   <button type="submit" class="btn btn-primary border-0 py-2 px-3 shadow-2">Entrar</button>
-                </div>﻿
+                </div>
               </form>
       
               {% include 'core/components/form-error.html' with form=form %}

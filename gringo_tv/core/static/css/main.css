@@ -1,7 +1,8 @@
 *::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
-*::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
   background: #ecf0f5;
 }
 *::-webkit-scrollbar-thumb {
@@ -12,23 +13,13 @@
 /* ========================================================= */
 /* ADMINLTE */
 /* ========================================================= */
-@media (min-width: 768px){
-  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
-    top: 48px;
-  }
-}
 .main-sidebar{
-  width: 265px;
   padding-top: 70px;
-  box-shadow: 1px 0 20px 0 #3f4d67;
+  box-shadow: 1px 5px 20px 0 #3f4d67;
 }
-.content-wrapper,
-.main-footer{
-  margin-left: 265px;
-}
+.main-header{max-height: none;}
 .main-header .logo{
   height: 70px;
-  width: 265px;
 }
 .main-header .sidebar-toggle{
   font-weight: 900;
