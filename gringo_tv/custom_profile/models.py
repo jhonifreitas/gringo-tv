@@ -16,6 +16,7 @@ class Profile(AbstractBaseModel):
     class Meta:
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfils'
+        ordering = ['user__first_name', '-created_at']
         permissions = [
             ('list_profile', 'Pode Listar Perfils'),
         ]

@@ -8,6 +8,7 @@ from gringo_tv.custom_profile import models, forms
 
 class ProfileListView(views.BaseListView):
 
+    paginate_by = 10
     model = models.Profile
     template_name = 'profile/list.html'
     permission_required = ['custom_profile.list_profile']
@@ -74,6 +75,7 @@ class ProfilePointsView(views.BaseView):
 # #####################################################################################################################
 class IndicationListView(views.BaseListView):
 
+    paginate_by = 10
     model = models.Indication
     template_name = 'indication/list.html'
 

@@ -20,7 +20,11 @@ def get_color_status(value):
 
 @register.filter('mask_phone')
 def mask_phone(value):
-    return '({}) {}-{}'.format(value[0:2], value[2:7], value[7:])
+    if len(value) == 10:
+        return '({}) {}-{}'.format(value[0:2], value[2:6], value[6:])
+    elif len(value) == 11:
+        return '({}) {}-{}'.format(value[0:2], value[2:7], value[7:])
+    return '---'
 
 
 @register.filter('concat')

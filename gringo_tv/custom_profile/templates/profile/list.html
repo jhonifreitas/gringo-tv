@@ -15,6 +15,7 @@
               <tr>
                 <th class="border-0 text-left pl-4">Nome</th>
                 <th class="border-0">Usuário</th>
+                {% if user.is_superuser %}<th class="border-0">Revendedor</th>{% endif %}
                 <th class="border-0">Telefone</th>
                 <th class="border-0">Pontos</th>
                 <th class="border-0" width="300">Ações</th>
@@ -25,6 +26,7 @@
                 <tr>
                   <td class="align-middle text-left pl-4">{{ object.user.get_full_name|default:object.user.username }}</td>
                   <td class="align-middle">{{ object.user.username }}</td>
+                  {% if user.is_superuser %}<td class="align-middle">{{ object.dealer }}</td>{% endif %}
                   <td class="align-middle">{{ object.phone|mask_phone }}</td>
                   <td class="align-middle">{{ object.points }}</td>
                   <td>
@@ -47,6 +49,11 @@
             </tbody>
           </table>
         </div>
+        {% if is_paginated %}
+          <div class="px-4">
+            {% include 'core/components/pagination.html' with obj=page_obj paginator=paginator %}
+          </div>
+        {% endif %}
       </div>
     </div>
   </section>
