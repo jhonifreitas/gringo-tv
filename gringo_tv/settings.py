@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import cloudinary
 from decouple import Csv
 from decouple import config
 from django.urls import reverse_lazy
@@ -54,6 +55,7 @@ EXTRA_APPS = [
     'widget_tweaks',
     'django_extensions',
     'storages',
+    'cloudinary'
 ]
 
 PROJECT_APPS = [
@@ -154,20 +156,20 @@ LANGUAGES = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-AWS_QUERYSTRING_AUTH = True
-AWS_DEFAULT_ACL = 'private'
-AWS_BUCKET_ACL = 'private'
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
+# AWS_QUERYSTRING_AUTH = True
+# AWS_DEFAULT_ACL = 'private'
+# AWS_BUCKET_ACL = 'private'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default='')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_AWS_BUCKET = config('STATIC_AWS_BUCKET', default='')
+# STATIC_AWS_BUCKET = config('STATIC_AWS_BUCKET', default='')
 STATICFILES_STORAGE = config('STATICFILES_STORAGE', default='django.contrib.staticfiles.storage.StaticFilesStorage')
 
 MEDIA_URL = config('MEDIA_URL', default='/media/')
-MEDIA_AWS_BUCKET = config('MEDIA_AWS_BUCKET', default='')
+# MEDIA_AWS_BUCKET = config('MEDIA_AWS_BUCKET', default='')
 
 DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE', default='django.core.files.storage.FileSystemStorage')
 
@@ -184,3 +186,14 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
+
+# CLOUDINARY
+CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME', default='')
+CLOUDINARY_API_KEY = config('CLOUDINARY_API_KEY', default='')
+CLOUDINARY_API_SECRET = config('CLOUDINARY_API_SECRET', default='')
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET
+)

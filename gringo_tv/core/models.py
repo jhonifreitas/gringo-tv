@@ -1,5 +1,5 @@
 from uuid import uuid4
-
+from cloudinary.models import CloudinaryField
 from auditlog.models import AuditlogHistoryField
 
 from django.db import models
@@ -48,6 +48,7 @@ class Config(AbstractBaseModel):
         verbose_name = 'Configuração'
         verbose_name_plural = 'Configuração'
 
-    image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path, null=True, blank=True)
+    image = CloudinaryField(verbose_name='Imagem', null=True, blank=True)
+    # image = models.ImageField(verbose_name='Imagem', upload_to=get_config_path, null=True, blank=True)
     datetime = models.DateTimeField(verbose_name='Data/Hora')
     description = models.TextField(verbose_name='Descrição')

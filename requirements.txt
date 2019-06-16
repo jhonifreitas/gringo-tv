@@ -25,3 +25,6 @@ https://github.com/darklow/django-suit/tarball/v2
 # Django Tests
 django-test-without-migrations
 ipython
+
+# Cloudinary
+cloudinary
