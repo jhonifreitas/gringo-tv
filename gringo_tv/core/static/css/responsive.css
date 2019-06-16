@@ -7,6 +7,9 @@
   .sidebar-open .main-sidebar{
     box-shadow: 1px 5px 20px 0 #3f4d67;
   }
+  .sign-page .h-100{
+    height: auto!important;
+  }
 }
 @media (min-width: 768px){
   .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
