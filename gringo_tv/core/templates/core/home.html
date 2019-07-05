@@ -89,10 +89,12 @@
         <i class="fas fa-gift mr-2"></i>
         <h3 class="box-title">Premiação</h3>
       </div>
-      <div class="box-body text-center">
-        {% if config.image %}<img src="{{ config.image.url }}" class="img-fluid" alt="">{% endif %}
-        <h5 class="mt-5">ATENÇÃO!</h5>
-        <p>{{ config.description }}</p>
+      <div class="box-body">
+        <div class="text-center">
+          {% if config.image %}<img src="{{ config.image.url }}" class="img-fluid" alt="">{% endif %}
+          <h5 class="mt-5">ATENÇÃO!</h5>
+        </div>
+        <div>{{ config.description|safe }}</div>
       </div>
     </div>
   </section>
