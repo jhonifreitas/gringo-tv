@@ -65,7 +65,7 @@
     {% url 'indication:delete' object.pk as url_delete %}
     {% url 'indication:status' object.pk as url_status %}
 
-    {% if user.is_superuser %}
+    {% if user.is_superuser or user.dealer %}
       {% if not object.is_active %}{% include 'core/components/modal_confirm.html' with uuid="active-"|concat:object.uuid url=url_status|add:'?status=active' %}{% endif %}
       {% if not object.is_pending %}{% include 'core/components/modal_confirm.html' with uuid="pending-"|concat:object.uuid url=url_status|add:'?status=pending' %}{% endif %}
       {% if not object.is_not_active %}{% include 'core/components/modal_confirm.html' with uuid="not-active-"|concat:object.uuid url=url_status|add:'?status=not_active' %}{% endif %}
