@@ -13,6 +13,12 @@ class ProfileListView(views.BaseListView):
     template_name = 'profile/list.html'
     permission_required = ['custom_profile.list_profile']
 
+    def get_queryset(self):
+        object_list = super().get_queryset()
+        if hasattr(self.request.user, 'dealer'):
+            object_list = object_list.filter(dealer=self.request.user.dealer)
+        return object_list
+
 
 class ProfileCreateView(views.BaseCreateView):
 
