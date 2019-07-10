@@ -72,7 +72,7 @@ class HomeView(BaseView):
         context = {
             'indications': indications.count(),
             'pendings': pendings.count(),
-            'ranking': ranking.order_by('points'),
+            'ranking': ranking.order_by('-points'),
             'config': models.Config.objects.first()
         }
         return context
