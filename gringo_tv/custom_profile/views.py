@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -15,8 +16,14 @@ class ProfileListView(views.BaseListView):
 
     def get_queryset(self):
         object_list = super().get_queryset()
+        text_filter = self.request.GET.get('q')
         if hasattr(self.request.user, 'dealer'):
             object_list = object_list.filter(dealer=self.request.user.dealer)
+        if text_filter:
+            object_list = object_list.filter(
+                Q(user__username__icontains=text_filter) |
+                Q(user__first_name__icontains=text_filter) |
+                Q(user__last_name__icontains=text_filter))
         return object_list
 
 
