@@ -18,7 +18,7 @@ def create_profiles(apps, schema_editor):
     if dealer.exists():
         dealer = dealer.first()
     else:
-        user = User.objects.create(
+        user = User.objects.create_user(
             username=json_file[0].get('dealer'),
             password='trocar@123'
         )
@@ -28,9 +28,10 @@ def create_profiles(apps, schema_editor):
         user,_ = User.objects.get_or_create(
             username=profile.get('username'),
             first_name=profile.get('first_name'),
-            last_name=profile.get('last_name'),
-            password=profile.get('password')
+            last_name=profile.get('last_name')
         )
+        user.set_password(profile.get('password'))
+        user.save()
         Profile.objects.get_or_create(
             user=user,
             dealer=dealer,
