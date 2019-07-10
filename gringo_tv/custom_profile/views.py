@@ -85,9 +85,9 @@ class IndicationListView(views.BaseListView):
             object_list = object_list.filter(profile__uuid=self.request.GET.get('profile'))
         else:
             if hasattr(self.request.user, 'profile'):
-                object_list.filter(profile=self.request.user.profile)
-            if hasattr(self.request.user, 'dealer'):
-                object_list.filter(profile__dealer=self.request.user.dealer)
+                object_list = object_list.filter(profile=self.request.user.profile)
+            elif hasattr(self.request.user, 'dealer'):
+                object_list = object_list.filter(profile__dealer=self.request.user.dealer)
         return object_list
 
 
