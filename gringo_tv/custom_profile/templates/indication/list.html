@@ -16,6 +16,9 @@
                 <th class="border-0 text-left pl-4">Nome</th>
                 <th class="border-0">Telefone</th>
                 <th class="border-0">Status</th>
+                {% if user.is_superuser %}
+                  <th class="border-0">Revendedor</th>
+                {% endif %}
                 <th class="border-0">Ações</th>
               </tr>
             </thead>
@@ -25,6 +28,9 @@
                   <td class="text-left pl-4">{{ object.name }}</td>
                   <td>{{ object.phone|mask_phone }}</td>
                   <td class="text-{{ object.status|get_color_status }}">{{ object.get_status_display }}</td>
+                  {% if user.is_superuser %}
+                    <td>{{ object.profile.dealer }}</td>
+                  {% endif %}
                   <td>
                     {% if user.is_superuser or user.dealer %}
                       {% if not object.is_active %}<button type="button" data-toggle="modal" data-target="#confirm-active-{{ object.uuid }}" class="btn btn-outline-info" title="Ativar"><i class="fas fa-check"></i></button>{% endif %}
